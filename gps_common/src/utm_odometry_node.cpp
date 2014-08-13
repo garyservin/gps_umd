@@ -9,10 +9,11 @@
 #include <sensor_msgs/NavSatFix.h>
 #include <gps_common/conversions.h>
 #include <nav_msgs/Odometry.h>
+#include <std_msgs/String.h>
 
 using namespace gps_common;
 
-static ros::Publisher odom_pub;
+static ros::Publisher odom_pub, zone_pub;
 std::string frame_id, child_frame_id;
 double rot_cov;
 
@@ -27,9 +28,9 @@ void callback(const sensor_msgs::NavSatFixConstPtr& fix) {
   }
 
   double northing, easting;
-  std::string zone;
+  std_msgs::String zone;
 
-  LLtoUTM(fix->latitude, fix->longitude, northing, easting, zone);
+  LLtoUTM(fix->latitude, fix->longitude, northing, easting, zone.data);
 
   if (odom_pub) {
     nav_msgs::Odometry odom;
@@ -73,6 +74,7 @@ void callback(const sensor_msgs::NavSatFixConstPtr& fix) {
     odom.pose.covariance = covariance;
 
     odom_pub.publish(odom);
+    zone_pub.publish(zone);
   }
 }
 
@@ -86,6 +88,7 @@ int main (int argc, char **argv) {
   priv_node.param<double>("rot_covariance", rot_cov, 99999.0);
 
   odom_pub = node.advertise<nav_msgs::Odometry>("odom", 10);
+  zone_pub = node.advertise<std_msgs::String>("zone", 10);
 
   ros::Subscriber fix_sub = node.subscribe("fix", 10, callback);
 
