@@ -40,9 +40,10 @@ catkin_package(
 ###########
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include ${catkin_INCLUDE_DIRS})
-add_executable(${PROJECT_NAME}/utm_odometry_node src/utm_odometry_node.cpp src/utm_odometry.cpp)
+add_library(utm_odometry src/utm_odometry.cpp)
+add_executable(${PROJECT_NAME}/utm_odometry_node src/utm_odometry_node.cpp)
 set_target_properties(${PROJECT_NAME}/utm_odometry_node PROPERTIES OUTPUT_NAME "utm_odometry_node")
-target_link_libraries(${PROJECT_NAME}/utm_odometry_node ${catkin_LIBRARIES})
+target_link_libraries(${PROJECT_NAME}/utm_odometry_node utm_odometry ${catkin_LIBRARIES})
 add_dependencies(${PROJECT_NAME}/utm_odometry_node ${PROJECT_NAME}_generate_messages_cpp)
 
 #############
