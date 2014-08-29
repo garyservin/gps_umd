@@ -50,7 +50,7 @@ add_dependencies(${PROJECT_NAME}/utm_odometry_node ${PROJECT_NAME}_generate_mess
 ## Install ##
 #############
 
-install(TARGETS ${PROJECT_NAME}/utm_odometry_node
+install(TARGETS utm_odometry ${PROJECT_NAME}/utm_odometry_node
   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
