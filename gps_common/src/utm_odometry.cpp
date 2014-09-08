@@ -47,7 +47,7 @@ void UTMOdometry::callback(const sensor_msgs::NavSatFixConstPtr& fix) {
     odom.header.stamp = fix->header.stamp;
 
     if (frame_id.empty())
-      odom.header.frame_id = fix->header.frame_id;
+      odom.header.frame_id = "utm"; //fix->header.frame_id;
     else
       odom.header.frame_id = frame_id;
 
